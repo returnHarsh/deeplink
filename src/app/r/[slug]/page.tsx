@@ -51,9 +51,11 @@ export default async function RedirectPage({ params }: Props) {
   // Detect User Agent
   const headersList = await headers();
   const userAgent = headersList.get('user-agent') || '';
+  const referrer = headersList.get('referer') || '';
   const { isInAppBrowser, isBot } = getBrowserInfo(userAgent);
 
   console.log("user agent is : " , userAgent)
+  console.log('Referrer:', referrer);
 
   const test = detectInAppBrowserClient()
   console.log("test is : " , test)
