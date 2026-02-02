@@ -56,6 +56,7 @@ export default async function RedirectPage({ params }: Props) {
 
   console.log("user agent is : " , userAgent)
   console.log('Referrer:', referrer);
+  console.log("in app browser : " , isInAppBrowser)
 
   const test = detectInAppBrowserClient()
   console.log("test is : " , test)
