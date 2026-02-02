@@ -4,7 +4,6 @@ import { getLinkBySlug } from '@/lib/storage';
 import { detectInAppBrowserClient, getBrowserInfo } from '@/lib/userAgent';
 import BreakoutPage from '@/components/BreakoutPage';
 import { Metadata } from 'next';
-import { useEffect } from 'react';
 
 type Props = {
   params: { slug: string };
