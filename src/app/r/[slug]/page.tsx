@@ -1,7 +1,7 @@
 import { redirect, notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import { getLinkBySlug } from '@/lib/storage';
-import { getBrowserInfo } from '@/lib/userAgent';
+import { detectInAppBrowserClient, getBrowserInfo } from '@/lib/userAgent';
 import BreakoutPage from '@/components/BreakoutPage';
 import { Metadata } from 'next';
 
@@ -52,6 +52,8 @@ export default async function RedirectPage({ params }: Props) {
   const headersList = await headers();
   const userAgent = headersList.get('user-agent') || '';
   const { isInAppBrowser, isBot } = getBrowserInfo(userAgent);
+  const test = detectInAppBrowserClient()
+  console.log("test is : " , test)
 
   // 1. If it is a Bot, we generally want to allow it to reach the destination 
   // so it can scrape metadata (unless we are proxying metadata, which is complex).
