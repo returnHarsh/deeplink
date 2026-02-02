@@ -53,7 +53,6 @@ export default async function RedirectPage({ params }: Props) {
   const userAgent = headersList.get('user-agent') || '';
   const { isInAppBrowser, isBot } = getBrowserInfo(userAgent);
 
-  console.log("headerList is : " , headersList);
   console.log("user agent is : " , userAgent)
 
   const test = detectInAppBrowserClient()
