@@ -69,10 +69,10 @@ export default async function RedirectPage({ params }: Props) {
 
   // 2. If it is an In-App Browser (LinkedIn/Instagram), show Breakout Page
   // if (isInAppBrowser) {
-  if (isInAppBrowser) {
+  if (true) {
     return <BreakoutPage destinationUrl={link.url} />;
   }
 
   // 3. Otherwise (Standard Browser), redirect immediately
-  redirect(link.url);
+  // redirect(link.url);
 }
