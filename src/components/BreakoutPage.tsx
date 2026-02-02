@@ -29,13 +29,13 @@ export default function BreakoutPage({ destinationUrl }: BreakoutPageProps) {
 
   const handleOpenSystemBrowser = () => {
     const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
-    const isAndroid = /android/i.test(userAgent);
+    // const isAndroid = /android/i.test(userAgent);
     const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream;
 
     setIsRedirecting(true);
 
     try {
-      if (isAndroid) {
+      if (true) {
         console.log("it is android")
         // Android Intent with fallback
         // Uses the special 'intent://' scheme which WebViews often handle by delegating to the OS
