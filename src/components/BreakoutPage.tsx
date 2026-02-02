@@ -1,7 +1,15 @@
+/* eslint-disable @next/next/no-sync-scripts */
+/* eslint-disable @next/next/no-page-custom-font */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
+
+
+
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion'; // We might need to install framer-motion, or just use CSS animations if not available. I'll stick to CSS for zero-dep or add it.
+import { useState} from 'react';
+// import { motion } from 'framer-motion'; // We might need to install framer-motion, or just use CSS animations if not available. I'll stick to CSS for zero-dep or add it.
 // Actually, for "Premium" feel, framer-motion is great. But to avoid installing too many deps without asking, I will use Tailwind animate-pulse/spin and custom CSS transitions.
 // But the user asked for premium. I will add a simple copy-to-clipboard hook.
 
@@ -28,6 +36,7 @@ export default function BreakoutPage({ destinationUrl }: BreakoutPageProps) {
 
     try {
       if (isAndroid) {
+        console.log("it is android")
         // Android Intent with fallback
         // Uses the special 'intent://' scheme which WebViews often handle by delegating to the OS
         // S.browser_fallback_url ensures that if the intent fails (e.g. Chrome not installed), it falls back to the original URL
@@ -38,6 +47,7 @@ export default function BreakoutPage({ destinationUrl }: BreakoutPageProps) {
       }
 
       if (isIOS) {
+        console.log("it is IOS")
         // iOS: Attempt to open in Chrome first using the scheme
         const chromeUrl = destinationUrl.replace(/^https/, 'googlechromes').replace(/^http/, 'googlechrome');
         
@@ -46,12 +56,15 @@ export default function BreakoutPage({ destinationUrl }: BreakoutPageProps) {
 
         // Fallback to standard navigation if Chrome scheme doesn't work (after a short delay)
         // Note: This relies on the browser not blocking the subsequent redirect if the first one fails silently
-        setTimeout(() => {
-           window.location.href = destinationUrl;
-        }, 500);
+
+        // setTimeout(() => {
+        //    window.location.href = destinationUrl;
+        // }, 500);
+
         return;
       }
 
+      console.log("no android or IOS found , Opening generic")
       // Desktop / Other Fallback
       window.open(destinationUrl, '_blank');
       
@@ -100,7 +113,7 @@ export default function BreakoutPage({ destinationUrl }: BreakoutPageProps) {
 
             {/* Copy Link wrapper */}
             <div className="relative group w-full">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl opacity-30 group-hover:opacity-75 transition duration-500 blur"></div>
+              <div className="absolute -inset-0.5 from-purple-600 to-blue-600 rounded-xl opacity-30 group-hover:opacity-75 transition duration-500 blur"></div>
               <div className="relative flex items-center bg-gray-900 border border-gray-800 rounded-xl p-2 pl-4">
                 <p className="flex-1 text-gray-400 truncate text-sm font-mono mr-4">{destinationUrl}</p>
                 <button 
