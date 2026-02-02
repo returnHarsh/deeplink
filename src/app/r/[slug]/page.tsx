@@ -4,6 +4,7 @@ import { getLinkBySlug } from '@/lib/storage';
 import { detectInAppBrowserClient, getBrowserInfo } from '@/lib/userAgent';
 import BreakoutPage from '@/components/BreakoutPage';
 import { Metadata } from 'next';
+import { useEffect } from 'react';
 
 type Props = {
   params: { slug: string };
@@ -52,6 +53,10 @@ export default async function RedirectPage({ params }: Props) {
   const headersList = await headers();
   const userAgent = headersList.get('user-agent') || '';
   const { isInAppBrowser, isBot } = getBrowserInfo(userAgent);
+
+  console.log("headerList is : " , headersList);
+  console.log("user agent is : " , userAgent)
+
   const test = detectInAppBrowserClient()
   console.log("test is : " , test)
 
