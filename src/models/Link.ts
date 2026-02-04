@@ -1,9 +1,20 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
+export interface IClickInfo {
+	timestamp: Date;
+	country: string;
+	region: string;
+	city: string;
+	ip: string;
+	company: string;
+}
+
 export interface ILink extends Document {
 	url: string;
 	slug: string;
 	clicks: number;
+	clickTimestamps: Date[];
+	clicksInfo: IClickInfo[];
 	createdAt: Date;
 }
 
@@ -22,6 +33,21 @@ const LinkSchema: Schema = new Schema({
 	clicks: {
 		type: Number,
 		default: 0,
+	},
+	clickTimestamps: {
+		type: [Date],
+		default: [],
+	},
+	clicksInfo: {
+		type: [{
+			timestamp: { type: Date, default: Date.now },
+			country: { type: String, default: 'Unknown' },
+			region: { type: String, default: 'Unknown' },
+			city: { type: String, default: 'Unknown' },
+			ip: { type: String, default: 'Unknown' },
+			company: { type: String, default: 'Unknown' }
+		}],
+		default: []
 	},
 	createdAt: {
 		type: Date,

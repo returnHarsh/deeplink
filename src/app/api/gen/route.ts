@@ -20,9 +20,13 @@ export async function POST(request: Request) {
 		const link = await createLink(url, slug);
 		return NextResponse.json(link);
 	} catch (error: any) {
+		console.error('Error in /api/gen:', error);
 		if (error.message === 'Slug already in use') {
 			return NextResponse.json({ error: 'Slug already in use' }, { status: 409 });
 		}
-		return NextResponse.json({ error: 'Failed to create link' }, { status: 500 });
+		if (error.name === 'ValidationError') {
+			return NextResponse.json({ error: 'Validation failed', details: error.message }, { status: 400 });
+		}
+		return NextResponse.json({ error: 'Failed to create link', details: error.message }, { status: 500 });
 	}
 }

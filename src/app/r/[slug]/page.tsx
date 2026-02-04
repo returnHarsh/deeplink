@@ -1,9 +1,10 @@
 import { redirect, notFound } from 'next/navigation';
 import { headers } from 'next/headers';
-import { getLinkBySlug } from '@/lib/storage';
+import { getLinkBySlug, recordClick } from '@/lib/storage';
 import { detectInAppBrowserClient, getBrowserInfo } from '@/lib/userAgent';
 import BreakoutPage from '@/components/BreakoutPage';
 import { Metadata } from 'next';
+import geoip from 'fast-geoip';
 
 type Props = {
   params: { slug: string };
@@ -20,16 +21,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  // We can fetch title/image from the destination URL if we wanted to be fancy,
-  // but for now we'll use a generic or the one provided (if we stored it).
-  // Ideally, DeepLinker passes through the OG tags of the destination page, 
-  // but that requires fetching the destination. 
-  // For a simple demo, we will set a generic "Click to view" or try to be transparent.
-  // Actually, standard shorteners often redirect bots so the crawler sees the final destination's tags.
-  // Let's do that: if it's a bot, we might let it redirect?
-  // BUT: if we redirect a LinkedInBot, it will see the final page.
-  // The 'page' component logic handles the user, but metadata is fetched separately by crawlers.
-  
   return {
     title: 'Shared Link - DeepLinker',
     description: 'Click to view the content.',
@@ -48,8 +39,47 @@ export default async function RedirectPage({ params }: Props) {
     notFound();
   }
 
-  // Detect User Agent
+  // Detect visitor's IP and Country
   const headersList = await headers();
+
+  // Try to get the real client IP from common proxy headers
+  const forwardedFor = headersList.get('x-forwarded-for');
+  const realIp = headersList.get('x-real-ip');
+  console.log("realIp is : " , realIp)
+  const ip = (forwardedFor ? forwardedFor.split(',')[0]?.trim() : null) || realIp || 'Unknown';
+  
+  // On Vercel / many hosts, geolocation is already available via headers.
+  const headerCountry = headersList.get('x-vercel-ip-country');
+  const headerRegion =
+    headersList.get('x-vercel-ip-country-region') ||
+    headersList.get('x-vercel-ip-region');
+  const headerCity = headersList.get('x-vercel-ip-city');
+  const headerAsName = headersList.get('x-vercel-ip-as-name');
+
+  // Geolocation lookup (fast-geoip is async). Wrap in try/catch so failures don’t break redirects.
+  let geo: Awaited<ReturnType<typeof geoip.lookup>> | null = null;
+  try {
+    if (ip && ip !== 'Unknown' && ip !== '127.0.0.1') {
+      geo = await geoip.lookup(ip);
+      console.log("geo is : " , geo)
+    }
+  } catch (e) {
+    console.error('GeoIP lookup failed', e);
+  }
+  
+  const geoData = {
+    country: geo?.country || headerCountry || 'Unknown',
+    region: geo?.region || headerRegion || 'Unknown',
+    city: geo?.city || headerCity || 'Unknown',
+    ip,
+    // Try to capture ISP / company from hosting headers if available
+    company: headerAsName || 'Unknown',
+  };
+
+  // Record the click with detailed geo data
+  await recordClick(slug, geoData);
+
+  // Detect User Agent
   const userAgent = headersList.get('user-agent') || '';
   const referrer = headersList.get('referer') || '';
   const { isInAppBrowser, isBot } = getBrowserInfo(userAgent);

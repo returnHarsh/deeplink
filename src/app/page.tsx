@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -54,6 +55,19 @@ export default function Home() {
 
       <div className="container mx-auto px-4 py-20 relative z-10 flex flex-col items-center max-w-2xl">
         
+        {/* Navigation */}
+        <div className="absolute top-8 right-8">
+          <Link 
+            href="/dashboard"
+            className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors text-sm font-medium bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg border border-white/5"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6H20.25M3.75 12H20.25M3.75 18H20.25" />
+            </svg>
+            <span>Dashboard</span>
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-16 space-y-4">
            <div className="inline-block p-4 rounded-2xl bg-gradient-to-tr from-purple-500/20 to-blue-500/20 border border-white/5 mb-4 shadow-2xl shadow-purple-500/10">
@@ -147,9 +161,21 @@ export default function Home() {
                     )}
                   </button>
                </div>
-               <p className="mt-3 text-xs text-gray-500 text-center">
+                 <p className="mt-3 text-xs text-gray-500 text-center">
                  Share this link on LinkedIn or Instagram.
                </p>
+               
+               <div className="mt-6 flex justify-center">
+                  <Link 
+                    href={`/dashboard/${generatedLink.split('/r/')[1] || ''}`}
+                    className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors text-sm font-medium bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg border border-white/5"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
+                    </svg>
+                    <span>View Link Stats</span>
+                  </Link>
+                </div>
             </div>
           )}
 
