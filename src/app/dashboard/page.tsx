@@ -1,6 +1,7 @@
 import { getLinks } from '@/lib/storage';
 import Link from 'next/link';
 import DashboardLinksList from '@/components/DashboardLinksList';
+import GlobalTagAnalytics from '@/components/GlobalTagAnalytics';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,6 +29,8 @@ export default async function DashboardRoot() {
             Create New
           </Link>
         </div>
+
+        <GlobalTagAnalytics links={links} />
 
         <DashboardLinksList initialLinks={links} />
       </div>
