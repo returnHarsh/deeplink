@@ -15,6 +15,7 @@ export interface LinkData {
   id: string;
   url: string;
   slug: string;
+  tag: string;
   createdAt: string;
   clicks: number;
   clickTimestamps?: string[];
@@ -29,6 +30,7 @@ export async function getLinks(): Promise<LinkData[]> {
     id: doc._id.toString(),
     url: doc.url,
     slug: doc.slug,
+    tag: doc.tag,
     createdAt: doc.createdAt.toISOString(),
     clicks: doc.clicks,
     clickTimestamps: doc.clickTimestamps?.map((d: Date) => d.toISOString()) || [],
@@ -54,6 +56,7 @@ export async function getLinkBySlug(slug: string): Promise<LinkData | undefined>
     id: doc._id.toString(),
     url: doc.url,
     slug: doc.slug,
+    tag: doc.tag,
     createdAt: doc.createdAt.toISOString(),
     clicks: doc.clicks,
     clickTimestamps: doc.clickTimestamps?.map((d: Date) => d.toISOString()) || [],
@@ -69,7 +72,7 @@ export async function getLinkBySlug(slug: string): Promise<LinkData | undefined>
 }
 
 // Create new link
-export async function createLink(url: string, slug?: string): Promise<LinkData> {
+export async function createLink(url: string, slug?: string, tag: string = 'others'): Promise<LinkData> {
   await dbConnect();
 
   // Generate slug if not provided
@@ -84,12 +87,14 @@ export async function createLink(url: string, slug?: string): Promise<LinkData> 
   const newLink = await Link.create({
     url,
     slug: finalSlug,
+    tag,
   });
 
   return {
     id: newLink._id.toString(),
     url: newLink.url,
     slug: newLink.slug,
+    tag: newLink.tag,
     createdAt: newLink.createdAt.toISOString(),
     clicks: newLink.clicks,
     clickTimestamps: [],
@@ -115,4 +120,10 @@ export async function recordClick(
       }
     }
   );
+}
+
+// Delete link by slug
+export async function deleteLinkBySlug(slug: string): Promise<void> {
+  await dbConnect();
+  await Link.deleteOne({ slug });
 }

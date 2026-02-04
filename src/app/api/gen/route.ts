@@ -4,7 +4,7 @@ import { createLink } from '@/lib/storage';
 export async function POST(request: Request) {
 	try {
 		const body = await request.json();
-		const { url, slug } = body;
+		const { url, slug, tag } = body;
 
 		if (!url) {
 			return NextResponse.json({ error: 'URL is required' }, { status: 400 });
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 			return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 });
 		}
 
-		const link = await createLink(url, slug);
+		const link = await createLink(url, slug, tag || 'others');
 		return NextResponse.json(link);
 	} catch (error: any) {
 		console.error('Error in /api/gen:', error);

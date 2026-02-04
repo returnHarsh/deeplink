@@ -1,7 +1,8 @@
-
 import { notFound } from 'next/navigation';
 import { getLinkBySlug } from '@/lib/storage';
 import DashboardClient from '@/components/DashboardClient';
+
+export const dynamic = 'force-dynamic';
 
 type Props = {
   params: { slug: string };

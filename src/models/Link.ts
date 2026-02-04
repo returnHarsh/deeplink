@@ -12,6 +12,7 @@ export interface IClickInfo {
 export interface ILink extends Document {
 	url: string;
 	slug: string;
+	tag: 'linkedin' | 'instagram' | 'twitter(x)' | 'facebook' | 'others';
 	clicks: number;
 	clickTimestamps: Date[];
 	clicksInfo: IClickInfo[];
@@ -29,6 +30,12 @@ const LinkSchema: Schema = new Schema({
 		unique: true,
 		index: true,
 		maxlength: [20, 'Slug cannot be more than 20 characters'],
+	},
+	tag: {
+		type: String,
+		enum: ['linkedin', 'instagram', 'twitter(x)', 'facebook', 'others'],
+		default: 'others',
+		required: true,
 	},
 	clicks: {
 		type: Number,

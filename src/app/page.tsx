@@ -6,6 +6,7 @@ import Link from 'next/link';
 export default function Home() {
   const [url, setUrl] = useState('');
   const [slug, setSlug] = useState('');
+  const [tag, setTag] = useState('others');
   const [generatedLink, setGeneratedLink] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,7 +24,7 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ url, slug }),
+        body: JSON.stringify({ url, slug, tag }),
       });
 
       const data = await res.json();
@@ -112,6 +113,26 @@ export default function Home() {
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
                 />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300 ml-1">Select Tag (Mandatory)</label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {['linkedin', 'instagram', 'twitter(x)', 'facebook', 'others'].map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setTag(t)}
+                    className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all ${
+                      tag === t 
+                        ? 'bg-purple-600/20 border-purple-500 text-purple-400' 
+                        : 'bg-black/40 border-white/10 text-gray-500 hover:border-white/20'
+                    }`}
+                  >
+                    {t.charAt(0).toUpperCase() + t.slice(1)}
+                  </button>
+                ))}
               </div>
             </div>
 

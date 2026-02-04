@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { format, subHours, subDays, subMinutes, eachHourOfInterval, eachDayOfInterval, eachMinuteOfInterval, isAfter, getHours } from 'date-fns';
 import { LinkData } from '@/lib/storage';
@@ -13,6 +13,11 @@ interface DashboardClientProps {
 
 export default function DashboardClient({ link }: DashboardClientProps) {
   const [timeRange, setTimeRange] = useState<TimeRange>('24H');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Convert timestamps to Date objects
   const timestamps = useMemo(() => {
@@ -155,6 +160,10 @@ export default function DashboardClient({ link }: DashboardClientProps) {
       .sort((a, b) => b.clicks - a.clicks);
   }, [link.clicksInfo, link.clickTimestamps, link.clicks]);
 
+  if (!mounted) {
+    return <div className="p-6 max-w-6xl mx-auto animate-pulse bg-white/5 rounded-xl h-96" />;
+  }
+
 
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-8">
@@ -162,8 +171,11 @@ export default function DashboardClient({ link }: DashboardClientProps) {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">Analytics Dashboard</h1>
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-gray-500 dark:text-gray-400 flex items-center gap-2">
              Stats for <a href={link.url} target="_blank" className="text-blue-500 hover:underline">{link.slug}</a>
+             <span className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                {link.tag}
+             </span>
           </p>
         </div>
         <div className="flex gap-2 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
