@@ -2,6 +2,7 @@ import { getLinks } from '@/lib/storage';
 import Link from 'next/link';
 import DashboardLinksList from '@/components/DashboardLinksList';
 import GlobalTagAnalytics from '@/components/GlobalTagAnalytics';
+import LogoutButton from '@/components/LogoutButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,25 +16,32 @@ export default async function DashboardRoot() {
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto relative z-10 max-w-4xl">
-        <div className="flex justify-between items-center mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+          {/* Title Section */}
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
               Your Smart Links
             </h1>
-            <p className="text-gray-400 mt-2">Manage and track your generated links</p>
+            <p className="text-gray-400 text-sm md:text-lg mt-2">Manage and track your generated links</p>
           </div>
-          <Link 
-            href="/"
-            className="px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all font-medium"
-          >
-            Create New
-          </Link>
+
+          {/* Buttons Section */}
+          <div className="flex gap-3 w-full md:w-auto">
+            <Link 
+              href="/"
+              className="flex-1 md:flex-initial px-2 md:px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all font-medium text-[14px] text-center"
+            >
+              Create New
+            </Link>
+            <LogoutButton />
+          </div>
         </div>
 
         <GlobalTagAnalytics links={links} />
 
         <DashboardLinksList initialLinks={links} />
       </div>
+
     </main>
   );
 }

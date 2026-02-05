@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { format, subHours, subDays, subMinutes, eachHourOfInterval, eachDayOfInterval, eachMinuteOfInterval, isAfter, getHours } from 'date-fns';
 import { LinkData } from '@/lib/storage';
+import Link from 'next/link';
 
 type TimeRange = '5M' | '10M' | '30M' | '1H' | '24H' | '7D' | '30D' | 'ALL';
 
@@ -168,6 +169,22 @@ export default function DashboardClient({ link }: DashboardClientProps) {
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-8">
       {/* Header */}
+
+       {/* Navigation */}
+       <div className="relative flex items-center justify-end">
+       <div className='flex items-center space-x-2 ml-auto'>
+       <Link
+            href="/dashboard"
+            className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors text-sm md:text-md font-medium bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg border border-white/5"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6H20.25M3.75 12H20.25M3.75 18H20.25" />
+            </svg>
+            <span>Dashboard</span>
+          </Link>
+       </div>
+        </div>
+
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">Analytics Dashboard</h1>
@@ -266,6 +283,8 @@ export default function DashboardClient({ link }: DashboardClientProps) {
                 />
                 <Tooltip 
                     contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                    labelStyle={{ color: '#111827' , fontWeight : 600 }} 
+                    itemStyle={{fontWeight : 600}}
                 />
                 <Area 
                     type="monotone" 
@@ -304,7 +323,9 @@ export default function DashboardClient({ link }: DashboardClientProps) {
                   />
                   <Tooltip 
                       cursor={{fill: 'transparent'}}
-                      contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                      contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.75)', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                      labelStyle={{ color: '#111827' , fontWeight : 600 }}   // label text
+                      itemStyle={{fontWeight : 600}}
                   />
                   <Bar dataKey="clicks" fill="#10B981" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -339,6 +360,8 @@ export default function DashboardClient({ link }: DashboardClientProps) {
                   <Tooltip 
                       cursor={{fill: 'transparent'}}
                       contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                      labelStyle={{ color: '#111827' , fontWeight : 600 }}   // label text
+                      itemStyle={{fontWeight : 600}}
                   />
                   <Bar dataKey="clicks" fill="#8b5cf6" radius={[0, 4, 4, 0]} />
               </BarChart>

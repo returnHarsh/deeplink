@@ -10,7 +10,7 @@
 
 import { useEffect, useState} from 'react';
 // import { motion } from 'framer-motion'; // We might need to install framer-motion, or just use CSS animations if not available. I'll stick to CSS for zero-dep or add it.
-// Actually, for "Premium" feel, framer-motion is great. But to avoid installing too many deps without asking, I will use Tailwind animate-pulse/spin and custom CSS transitions.
+// Actually, for "Premiuuim" feel, framer-motion is great. But to avoid installing too many deps without asking, I will use Tailwind animate-pulse/spin and custom CSS transitions.
 // But the user asked for premium. I will add a simple copy-to-clipboard hook.
 
 interface BreakoutPageProps {
@@ -21,6 +21,7 @@ export default function BreakoutPage({ destinationUrl }: BreakoutPageProps) {
   const [copied, setCopied] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isRedirectingFirstTime, setIsRedirectingFirstTime] = useState(true);
+
 
   const handleCopy = () => {
     navigator.clipboard.writeText(destinationUrl);
@@ -68,7 +69,9 @@ export default function BreakoutPage({ destinationUrl }: BreakoutPageProps) {
         // window.location.href = destinationUrl;
       } else {
         console.log("no android or IOS found , Opening generic")
-        window.open(destinationUrl, '_blank');
+        // window.open(destinationUrl, '_blank');  -----> to open in new tab , but we are not doing that here
+        // window.location.href = destinationUrl;
+        window.open(destinationUrl, '_self');
       }
     } catch (e) {
       console.error("Redirect attempt failed", e);
@@ -107,79 +110,55 @@ export default function BreakoutPage({ destinationUrl }: BreakoutPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-6 text-white overflow-hidden relative font-sans selection:bg-purple-500/30">
-      
-      <main className="relative z-10 w-full max-w-md flex flex-col items-center text-center space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-        
-        {/* Action Buttons */}
-        <div className="w-full space-y-3">
-             <p className="text-gray-300 text-sm mb-4">
-                This website is better when you opened this on your default browser..
-             </p>
-             <button 
+    <main className="min-h-screen grid place-items-center p-6 text-white" style={{
+      background: 'radial-gradient(900px 520px at 70% 20%, rgba(139,92,246,.22), transparent 60%), radial-gradient(700px 520px at 25% 80%, rgba(37,99,235,.18), transparent 62%), rgb(5,6,10)'
+    }}>
+      <div className="w-full max-w-2xl text-center">
+        <p className="text-sm text-gray-400 mb-2">Opening in your default browser…</p>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-3">This link works best in your system browser</h1>
+        <p className="text-sm text-gray-400 max-w-2xl mx-auto mb-6">Some apps open links inside an in-app browser. To continue smoothly and avoid login issues, open this in your default browser.</p>
+
+        <section className="mx-auto bg-white/6 border border-white/10 rounded-2xl backdrop-blur-md p-5 relative" style={{maxWidth: 620}}>
+          <div style={{position: 'absolute', inset: -2, background: 'radial-gradient(700px 240px at 50% 0%, rgba(139,92,246,.18), transparent 60%)', pointerEvents: 'none', borderRadius: 'inherit'}} />
+          <div className="relative">
+            <button
+              id="openBtn"
               onClick={handleOpenSystemBrowser}
               disabled={isRedirecting}
-              className="w-full py-4 px-6 bg-white text-gray-900 font-semibold rounded-xl hover:bg-gray-100 transition-colors shadow-lg shadow-white/5 active:scale-95 duration-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="w-full btn text-white font-extrabold py-4 rounded-lg cursor-pointer"
+              style={{background: 'linear-gradient(90deg,#8B5CF6,#2563EB)', boxShadow: '0 16px 44px rgba(37,99,235,.18), 0 22px 60px rgba(139,92,246,.14)'}}
             >
-              {isRedirecting ? (
-                <>
-                   <svg className="animate-spin h-5 w-5 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                   </svg>
-                   <span>Opening...</span>
-                </>
-              ) : (
-                <span>Open System Browser</span>
-              )}
+              {isRedirecting ? 'Opening System Browser...' : 'Open System Browser'}
             </button>
 
-            <div className='border border-solid border-gray-700'>
-            <a
-              href="x-safari-https://dev.mployee.me/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className='py-4  w-full flex items-center justify-center'
-            >
-              Open in Safari
-            </a>
-
-            {/* <a
-  href="shortcuts://x-callback-url/run-shortcut?name=abc&x-error=https://dev.mployee.me/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className='py-4  w-full flex items-center justify-center'
->
-  Open in Safari 2.0
-</a> */}
-
+            <div className="flex items-center gap-3 text-xs text-gray-300 my-4 uppercase tracking-wider" style={{alignItems: 'center'}}>
+              <span style={{flex: 1, height: 1, background: 'rgba(255,255,255,.10)'}} />
+              <span style={{padding: '0 8px'}}>or</span>
+              <span style={{flex: 1, height: 1, background: 'rgba(255,255,255,.10)'}} />
             </div>
 
-            {/* Copy Link wrapper */}
-            <div className="relative group w-full">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl opacity-30 group-hover:opacity-75 transition duration-500 blur"></div>
-              <div className="relative flex items-center bg-gray-900 border border-gray-800 rounded-xl p-2 pl-4">
-                <p className="flex-1 text-gray-400 truncate text-sm font-mono mr-4">{destinationUrl}</p>
-                <button 
-                  onClick={handleCopy}
-                  className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium rounded-lg transition-colors border border-gray-700"
-                >
-                  {copied ? (
-                      <span className="flex items-center text-green-400">
-                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                          Copied
-                      </span>
-                  ) : 'Copy Link'}
-                </button>
-              </div>
+            <div className="copyRow flex items-center gap-2 bg-white/6 border border-white/12 rounded-lg p-2">
+              <input className="url flex-1 bg-transparent text-left text-gray-200 px-2 py-2 truncate font-mono" id="urlField" readOnly value={destinationUrl} />
+              <button
+                id="copyBtn"
+                onClick={handleCopy}
+                type="button"
+                className="copyBtn font-semibold px-4 py-2 rounded-md"
+                style={{border: '1px solid rgba(255,255,255,.14)', background: 'rgba(255,255,255,.08)'}}
+              >
+                {copied ? 'Copied ✓' : 'Copy Link'}
+              </button>
             </div>
+
+            <div className="text-left text-sm text-gray-400 mt-3">If nothing happens after tapping “Open System Browser”, tap “Copy Link” and paste it into Chrome/Safari.</div>
+          </div>
+        </section>
+
+        <div className="mt-6 text-sm text-gray-400">
+          <div>Powered by <b className="text-white">Mployee.me</b></div>
+          <div className="mt-1">OpenInBrowser | Built for Creators | © {new Date().getFullYear()}</div>
         </div>
-
-        <p className="text-gray-600 text-sm pt-8">
-            DeepLinker &copy; {new Date().getFullYear()}
-        </p>
-
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

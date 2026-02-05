@@ -1,3 +1,7 @@
+/* eslint-disable @next/next/no-sync-scripts */
+/* eslint-disable @next/next/no-page-custom-font */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 'use client';
 
 import { useState } from 'react';
@@ -77,7 +81,8 @@ export default function Home() {
               </svg>
            </div>
            <h1 className="text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
-             DeepLinker
+             {/* DeepLinker */}
+             Open In Browser
            </h1>
            <p className="text-xl text-gray-400 max-w-lg mx-auto">
              Generate smart redirect links that breakout of Instagram and LinkedIn in-app browsers.

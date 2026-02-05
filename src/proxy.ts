@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
 	const session = request.cookies.get('session');
+	console.log('session is : ' , session)
 	const { pathname } = request.nextUrl;
 
 	// Protect all routes except /login and /api/login and /r/[slug]
