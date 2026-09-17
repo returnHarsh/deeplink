@@ -49,13 +49,13 @@ export default function PrivacyPage() {
               This Privacy Policy explains how OpenInBrowser, operated by <strong className="text-white">Desert Glam</strong>, collects, uses and protects information across our website, platform and analytics services.
             </p>
             <div className="flex gap-3 flex-wrap mt-4">
-              <span className="text-[11px] text-[#8491A8] px-2.5 py-[7px] border border-white/[0.08] rounded-full bg-white/[0.02]">Effective date: 17 September 2026</span>
+              <span className="text-[11px] text-[#8491A8] px-2.5 py-[7px] border border-white/[0.08] rounded-full bg-white/[0.02]">Effective date: 17 November 2025</span>
               <span className="text-[11px] text-[#8491A8] px-2.5 py-[7px] border border-white/[0.08] rounded-full bg-white/[0.02]">Legal entity: Desert Glam</span>
               <span className="text-[11px] text-[#8491A8] px-2.5 py-[7px] border border-white/[0.08] rounded-full bg-white/[0.02]">Brand: OpenInBrowser</span>
             </div>
-            <div className="mt-[18px] p-[14px_16px] border border-[rgba(255,184,92,.22)] bg-[rgba(255,184,92,.06)] text-[#C9B38B] rounded-[13px] text-xs leading-[1.55]">
+            {/* <div className="mt-[18px] p-[14px_16px] border border-[rgba(255,184,92,.22)] bg-[rgba(255,184,92,.06)] text-[#C9B38B] rounded-[13px] text-xs leading-[1.55]">
               This is a practical legal draft, not a substitute for jurisdiction-specific legal advice. Because OpenInBrowser processes behavioral analytics and may support user profiling, have counsel review consent, retention, cookie and cross-border data requirements before launch.
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -93,14 +93,35 @@ export default function PrivacyPage() {
               <section id="collect">
                 <h2 className="text-2xl tracking-[-0.025em] mt-[34px] mb-2.5">3. Information we collect</h2>
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">Depending on how you interact with OpenInBrowser, we may collect:</p>
-                <ul className="pl-5 text-[#A7B2C5] leading-[1.72] text-sm">
-                  <li><strong>Account information:</strong> name, business email, company name, role, login details and support communications.</li>
-                  <li><strong>Billing and subscription information:</strong> plan, billing status, invoices and transaction references. Payment card details may be handled directly by third-party payment providers.</li>
-                  <li><strong>Device and technical information:</strong> IP address, browser, operating system, device type, language, timestamps, referrer and approximate location derived from IP where permitted.</li>
-                  <li><strong>Tracked-link information:</strong> link identifier, source, destination, campaign metadata, click timestamps, redirect or deep-link outcome and related attribution parameters.</li>
-                  <li><strong>Website interaction information:</strong> page views, navigation paths, clicks, scroll activity, session duration, repeat visits, interactions with elements, conversion events and other customer-configured events.</li>
-                  <li><strong>Derived analytics:</strong> audience segments, engagement indicators, intent categories, journey states, conversion signals and model-generated summaries or recommendations.</li>
-                  <li><strong>Content submitted by customers:</strong> configuration data, event names, page metadata, labels, notes or other content customers choose to provide.</li>
+                <ul className="space-y-3 text-[#A7B2C5] leading-[1.72] text-sm my-3">
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span><strong>Account information:</strong> name, business email, company name, role, login details and support communications.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span><strong>Billing and subscription information:</strong> plan, billing status, invoices and transaction references. Payment card details may be handled directly by third-party payment providers.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span><strong>Device and technical information:</strong> IP address, browser, operating system, device type, language, timestamps, referrer and approximate location derived from IP where permitted.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span><strong>Tracked-link information:</strong> link identifier, source, destination, campaign metadata, click timestamps, redirect or deep-link outcome and related attribution parameters.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span><strong>Website interaction information:</strong> page views, navigation paths, clicks, scroll activity, session duration, repeat visits, interactions with elements, conversion events and other customer-configured events.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span><strong>Derived analytics:</strong> audience segments, engagement indicators, intent categories, journey states, conversion signals and model-generated summaries or recommendations.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span><strong>Content submitted by customers:</strong> configuration data, event names, page metadata, labels, notes or other content customers choose to provide.</span>
+                  </li>
                 </ul>
               </section>
 
@@ -114,16 +135,43 @@ export default function PrivacyPage() {
               <section id="use">
                 <h2 className="text-2xl tracking-[-0.025em] mt-[34px] mb-2.5">5. How we use information</h2>
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">We use information to provide, operate, secure and improve OpenInBrowser. This may include:</p>
-                <ul className="pl-5 text-[#A7B2C5] leading-[1.72] text-sm">
-                  <li>delivering link routing, redirection and deep-link functionality;</li>
-                  <li>measuring clicks, users, sessions, campaigns and conversion events;</li>
-                  <li>producing dashboards, reports and customer analytics;</li>
-                  <li>classifying visitor behavior and intent;</li>
-                  <li>generating recommendations, summaries and product insights;</li>
-                  <li>detecting fraud, abuse, outages or security events;</li>
-                  <li>supporting customers and responding to requests;</li>
-                  <li>administering subscriptions and billing;</li>
-                  <li>improving models, algorithms and product functionality where permitted by applicable agreements and law.</li>
+                <ul className="space-y-2 text-[#A7B2C5] leading-[1.72] text-sm my-3">
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>delivering link routing, redirection and deep-link functionality;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>measuring clicks, users, sessions, campaigns and conversion events;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>producing dashboards, reports and customer analytics;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>classifying visitor behavior and intent;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>generating recommendations, summaries and product insights;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>detecting fraud, abuse, outages or security events;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>supporting customers and responding to requests;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>administering subscriptions and billing;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>improving models, algorithms and product functionality where permitted by applicable agreements and law.</span>
+                  </li>
                 </ul>
               </section>
 
@@ -156,11 +204,23 @@ export default function PrivacyPage() {
               <section id="sharing">
                 <h2 className="text-2xl tracking-[-0.025em] mt-[34px] mb-2.5">9. How we share information</h2>
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">We may share information with service providers that help us host, secure, analyze, communicate, process payments or operate OpenInBrowser. We may also disclose information:</p>
-                <ul className="pl-5 text-[#A7B2C5] leading-[1.72] text-sm">
-                  <li>at a customer&apos;s direction;</li>
-                  <li>to comply with applicable law, legal process or lawful requests;</li>
-                  <li>to protect the rights, safety or security of users, customers, Desert Glam or others;</li>
-                  <li>in connection with a merger, acquisition, financing, restructuring or sale of assets, subject to appropriate safeguards.</li>
+                <ul className="space-y-2 text-[#A7B2C5] leading-[1.72] text-sm my-3">
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>at a customer&apos;s direction;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>to comply with applicable law, legal process or lawful requests;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>to protect the rights, safety or security of users, customers, Desert Glam or others;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>in connection with a merger, acquisition, financing, restructuring or sale of assets, subject to appropriate safeguards.</span>
+                  </li>
                 </ul>
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">We do not sell personal information in the ordinary meaning of a sale for money. If our practices change in a way that triggers additional statutory disclosure or opt-out obligations, we will update this Policy and provide required controls.</p>
               </section>
@@ -210,8 +270,8 @@ export default function PrivacyPage() {
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">
                   <strong>Desert Glam</strong><br />
                   Operating brand: OpenInBrowser<br />
-                  Email: <a href="mailto:privacy@openinbrowser.in" className="text-[#8DE8FF] hover:underline">privacy@openinbrowser.in</a><br />
-                  Registered address: [INSERT REGISTERED BUSINESS ADDRESS]
+                  Email: <a href="mailto:divya.batra@openinbrowser.in" className="text-[#8DE8FF] hover:underline">divya.batra@openinbrowser.in</a><br />
+                  Registered address: A-5, F-3, ANUPAM-III, VASUNDHRA COLONY, TONK ROAD, Jaipur - 302018
                 </p>
               </section>
             </article>

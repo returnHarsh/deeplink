@@ -53,13 +53,13 @@ export default function TermsPage() {
               These Terms govern access to and use of OpenInBrowser, a product and service operated by <strong className="text-white">Desert Glam</strong>.
             </p>
             <div className="flex gap-3 flex-wrap mt-4">
-              <span className="text-[11px] text-[#8491A8] px-2.5 py-[7px] border border-white/[0.08] rounded-full bg-white/[0.02]">Effective date: 17 September 2026</span>
+              <span className="text-[11px] text-[#8491A8] px-2.5 py-[7px] border border-white/[0.08] rounded-full bg-white/[0.02]">Effective date: 17 November 2025</span>
               <span className="text-[11px] text-[#8491A8] px-2.5 py-[7px] border border-white/[0.08] rounded-full bg-white/[0.02]">Legal entity: Desert Glam</span>
               <span className="text-[11px] text-[#8491A8] px-2.5 py-[7px] border border-white/[0.08] rounded-full bg-white/[0.02]">Brand: OpenInBrowser</span>
             </div>
-            <div className="mt-[18px] p-[14px_16px] border border-[rgba(255,184,92,.22)] bg-[rgba(255,184,92,.06)] text-[#C9B38B] rounded-[13px] text-xs leading-[1.55]">
+            {/* <div className="mt-[18px] p-[14px_16px] border border-[rgba(255,184,92,.22)] bg-[rgba(255,184,92,.06)] text-[#C9B38B] rounded-[13px] text-xs leading-[1.55]">
               This is a practical draft and should be reviewed by qualified counsel before production use, particularly for subscriptions, data-processing obligations, liability caps and governing-law provisions.
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -166,15 +166,39 @@ export default function TermsPage() {
               <section id="acceptable">
                 <h2 className="text-2xl tracking-[-0.025em] mt-[34px] mb-2.5">8. Acceptable use</h2>
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">You may not use OpenInBrowser to:</p>
-                <ul className="pl-5 text-[#A7B2C5] leading-[1.72] text-sm list-disc">
-                  <li>violate applicable law or third-party rights;</li>
-                  <li>track individuals in a deceptive, unlawful or prohibited manner;</li>
-                  <li>collect prohibited sensitive information;</li>
-                  <li>circumvent consent choices or privacy controls;</li>
-                  <li>introduce malicious code or interfere with the service;</li>
-                  <li>reverse engineer or attempt to discover non-public source code except where such restriction is prohibited by law;</li>
-                  <li>resell, sublicense or provide the service as a competing standalone analytics product without written permission;</li>
-                  <li>misrepresent AI-generated categorization as verified fact about an individual.</li>
+                <ul className="space-y-2 text-[#A7B2C5] leading-[1.72] text-sm my-3">
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>violate applicable law or third-party rights;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>track individuals in a deceptive, unlawful or prohibited manner;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>collect prohibited sensitive information;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>circumvent consent choices or privacy controls;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>introduce malicious code or interfere with the service;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>reverse engineer or attempt to discover non-public source code except where such restriction is prohibited by law;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>resell, sublicense or provide the service as a competing standalone analytics product without written permission;</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-[#76e5ff] font-bold text-base leading-none shrink-0 mt-[3px] select-none">•</span>
+                    <span>misrepresent AI-generated categorization as verified fact about an individual.</span>
+                  </li>
                 </ul>
               </section>
 
@@ -258,9 +282,9 @@ export default function TermsPage() {
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">
                   Unless a separate written agreement states otherwise, Desert Glam&apos;s aggregate liability arising out of or relating to the service will not exceed the amounts paid by Customer to Desert Glam for the service during the three months immediately preceding the event giving rise to the claim.
                 </p>
-                <div className="my-[18px] p-[15px] rounded-[13px] border border-[rgba(118,87,255,.22)] bg-[rgba(118,87,255,.07)] text-[#C7CFDE] text-[13px] leading-[1.6]">
+                {/* <div className="my-[18px] p-[15px] rounded-[13px] border border-[rgba(118,87,255,.22)] bg-[rgba(118,87,255,.07)] text-[#C7CFDE] text-[13px] leading-[1.6]">
                   The liability cap should be reviewed by counsel before publication because enforceability varies by jurisdiction and customer type.
-                </div>
+                </div> */}
               </section>
 
               {/* 17 */}
@@ -275,7 +299,7 @@ export default function TermsPage() {
               <section id="law">
                 <h2 className="text-2xl tracking-[-0.025em] mt-[34px] mb-2.5">18. Governing law and disputes</h2>
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">
-                  These Terms are governed by the laws of India, without regard to conflict-of-law principles. Subject to applicable mandatory law, disputes will be subject to the courts having competent jurisdiction at <strong>[INSERT REGISTERED CITY / STATE OF DESERT GLAM]</strong>.
+                  These Terms are governed by the laws of India, without regard to conflict-of-law principles. Subject to applicable mandatory law, disputes will be subject to the courts having competent jurisdiction at <strong>Jaipur, Rajasthan</strong>.
                 </p>
               </section>
 
@@ -294,8 +318,8 @@ export default function TermsPage() {
                 <p className="text-[#A7B2C5] leading-[1.72] text-sm">
                   <strong>Desert Glam</strong><br />
                   Operating brand: OpenInBrowser<br />
-                  Email: <a href="mailto:legal@openinbrowser.in" className="text-[#8DE8FF] hover:underline">legal@openinbrowser.in</a><br />
-                  Registered address: [INSERT REGISTERED BUSINESS ADDRESS]
+                  Email: <a href="mailto:divya.batra@openinbrowser.in" className="text-[#8DE8FF] hover:underline">divya.batra@openinbrowser.in</a><br />
+                  Registered address: A-5, F-3, ANUPAM-III, VASUNDHRA COLONY, TONK ROAD, Jaipur - 302018
                 </p>
               </section>
             </article>
