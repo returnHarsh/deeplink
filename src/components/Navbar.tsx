@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -66,31 +67,23 @@ export default function Navbar() {
     <>
       {/* ───────────────── NAV BAR ───────────────── */}
       <header
-        className="sticky top-0 z-50 backdrop-blur-[16px] border-b border-white/[0.06]"
-        style={{ background: 'rgba(7,10,18,.72)' }}
+        className="sticky top-0 z-50 backdrop-blur-[16px] border-b border-white/[0.06] bg-white"
+        // style={{ background: 'rgba(7,10,18,.72)' }}
       >
         <div className="w-[min(1180px,calc(100%-40px))] max-sm:w-[min(100%-24px,1180px)] mx-auto h-[74px] max-sm:h-[66px] flex items-center justify-between gap-7">
-          <Link href="/" className="flex items-center gap-3 font-[760] tracking-[-0.02em] text-white no-underline" aria-label="OpenInBrowser home">
-            <span
-              className="w-[34px] h-[34px] rounded-[11px] grid place-items-center"
-              style={{
-                background: 'linear-gradient(145deg,#7C5CFF,#23D5FF)',
-                boxShadow: '0 0 38px rgba(124,92,255,.35)',
-              }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" className="w-[19px] h-[19px]" aria-hidden="true">
-                <path d="M7 17L17 7M9 7h8v8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M17 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5" stroke="white" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </span>
-            <span>OpenInBrowser</span>
+          <Link href="/" className="flex items-center no-underline" aria-label="OpenInBrowser home">
+            <img
+              src="/navbar-logo.png"
+              alt="OpenInBrowser Logo"
+              className="h-20 max-sm:h-16 w-auto object-contain"
+            />
           </Link>
 
-          <nav className="hidden lg:flex gap-[26px] text-[#BCC5D8] text-sm">
-            <Link href="/product" className="hover:text-white transition-colors">How it works?</Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms &amp; Conditions</Link>
-            <Link href="/about" className="hover:text-white transition-colors">About</Link>
+          <nav className="hidden lg:flex gap-[26px] text-black text-sm">
+            <Link href="/product" className=" transition-colors">How it works?</Link>
+            <Link href="/privacy" className=" transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className=" transition-colors">Terms &amp; Conditions</Link>
+            <Link href="/about" className=" transition-colors">About</Link>
           </nav>
 
           <div className="flex gap-2.5">

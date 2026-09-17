@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   title: "OpenInBrowser — From click to conversion intelligence",
   description:
     "OpenInBrowser is an AI-powered conversion intelligence platform for deep-link journeys, user-level behavioral analytics, intent classification and real-time recommendations.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
