@@ -1,13 +1,18 @@
-import { getLinks } from '@/lib/storage';
+import { getLinks, LinkData } from '@/lib/storage';
 import Link from 'next/link';
 import DashboardLinksList from '@/components/DashboardLinksList';
 import GlobalTagAnalytics from '@/components/GlobalTagAnalytics';
 import LogoutButton from '@/components/LogoutButton';
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export default async function DashboardRoot() {
-  const links = await getLinks();
+  let links: LinkData[] = [];
+  try {
+    links = await getLinks();
+  } catch (e) {
+    console.warn("Could not fetch links during static build:", e);
+  }
 
   return (
     <main className="min-h-screen bg-black text-white selection:bg-purple-500/30 overflow-hidden relative p-8">
