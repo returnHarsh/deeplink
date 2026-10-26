@@ -35,10 +35,20 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      let data: any = {};
+      try {
+        data = await res.json();
+      } catch {
+        // Handle non-JSON responses like 504 Gateway Timeout
+      }
 
       if (!res.ok) {
-        throw new Error(data.error || 'Login failed');
+        throw new Error(
+          data.error ||
+            (res.status === 504
+              ? 'Database connection timed out. Please check your MongoDB network access / security group.'
+              : `Request failed (${res.status})`)
+        );
       }
 
       localStorage.setItem("token", data.token);

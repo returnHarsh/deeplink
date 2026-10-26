@@ -1,9 +1,12 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/deeplinker';
-
-if (!MONGODB_URI) {
-	throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+function getMongoUri(): string {
+	const uri = process.env.MONGODB_URI;
+	if (uri) return uri;
+	if (process.env.NODE_ENV === 'development') {
+		return 'mongodb://localhost:27017/deeplinker';
+	}
+	throw new Error('MONGODB_URI environment variable is missing on this server.');
 }
 
 /**
@@ -27,9 +30,11 @@ async function dbConnect() {
 	if (!cached.promise) {
 		const opts = {
 			bufferCommands: false,
+			serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of hanging for 30s
 		};
 
-		cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+		const uri = getMongoUri();
+		cached.promise = mongoose.connect(uri, opts).then((mongoose) => {
 			return mongoose;
 		});
 	}

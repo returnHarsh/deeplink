@@ -8,7 +8,7 @@ import { Metadata } from 'next';
 import geoip from 'fast-geoip';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
