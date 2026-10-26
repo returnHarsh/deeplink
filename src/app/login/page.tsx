@@ -4,8 +4,9 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,6 +14,12 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    // If user arrived at login, clear any stale token to prevent false redirect loops
+    localStorage.removeItem('token');
+    window.dispatchEvent(new Event('auth-change'));
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +41,8 @@ export default function LoginPage() {
         throw new Error(data.error || 'Login failed');
       }
 
+      localStorage.setItem("token", data.token);
+      window.dispatchEvent(new Event('auth-change'));
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.message);
@@ -162,12 +171,22 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full mt-5.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:brightness-105 text-white font-bold py-2.5 rounded-4xl transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed active:translate-y-0.5 cursor-pointer"
+                    className="w-full mt-5.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:brightness-105 text-white font-bold py-2.5 rounded-4xl transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed active:translate-y-0.5 cursor-pointer flex items-center justify-center gap-2"
                     style={{
                       boxShadow: '0 16px 40px rgba(37,99,235,.20), 0 18px 55px rgba(139,92,246,.18)'
                     }}
                   >
-                    {loading ? 'Signing in...' : 'Sign In'}
+                    {loading ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                        </svg>
+                        <span>Signing in...</span>
+                      </>
+                    ) : (
+                      'Sign In'
+                    )}
                   </button>
 
                   <div className="flex items-center justify-between gap-3 mt-3.5">
@@ -177,6 +196,16 @@ export default function LoginPage() {
                     <a href="#" className="text-sm text-slate-400 hover:text-slate-100 transition-colors no-underline hover:underline">
                       Contact support
                     </a>
+                  </div>
+
+                  <div className="text-center mt-4 text-sm text-slate-400">
+                    Don&apos;t have an account?{' '}
+                    <Link
+                      href="/signup"
+                      className="text-purple-400 hover:text-purple-300 font-semibold transition-colors underline hover:no-underline"
+                    >
+                      Sign up
+                    </Link>
                   </div>
 
                   <p className="mt-3.5 text-xs text-slate-500 leading-relaxed">

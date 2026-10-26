@@ -6,21 +6,25 @@ export function proxy(request: NextRequest) {
 	console.log('session is : ' , session)
 	const { pathname } = request.nextUrl;
 
-	// Protect all routes except /login and /api/login and /r/[slug]
-	// if (!session) {
-	// 	if (pathname === '/login' || pathname.startsWith('/api/login') || pathname.startsWith('/r/')) {
-	// 		return NextResponse.next();
-	// 	}
-	// 	return NextResponse.redirect(new URL('/login', request.url));
-	// }
+	// Protect dashboard routes (e.g. /dashboard, /dashboard/[slug], /generate)
+	const isProtectedRoute = pathname.startsWith('/dashboard') || pathname === '/generate';
 
-	// // Redirect authenticated users away from /login
-	// if (session && pathname === '/login') {
-	// 	return NextResponse.redirect(new URL('/dashboard', request.url));
-	// }
+	// If not logged in and attempting to access protected route, redirect to /login
+	if (!session && isProtectedRoute) {
+		const loginUrl = new URL('/login', request.url);
+		return NextResponse.redirect(loginUrl);
+	}
+
+	// Redirect authenticated users away from /login and /signup
+	if (session && (pathname === '/login' || pathname === '/signup')) {
+		return NextResponse.redirect(new URL('/dashboard', request.url));
+	}
 
 	return NextResponse.next();
 }
+
+export const middleware = proxy;
+export default proxy;
 
 export const config = {
 	matcher: [

@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
+import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
+import { signToken } from '@/lib/jwt';
 
 export async function POST(request: Request) {
 	try {
@@ -12,9 +14,15 @@ export async function POST(request: Request) {
 			return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
 		}
 
-		const user = await User.findOne({ email });
+		const cleanEmail = email.trim().toLowerCase();
+		const user = await User.findOne({ email: cleanEmail });
 
-		if (!user || user.password !== password) {
+		if (!user) {
+			return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+		}
+
+		const isPasswordValid = await bcrypt.compare(password, user.password);
+		if (!isPasswordValid) {
 			return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
 		}
 
@@ -22,9 +30,15 @@ export async function POST(request: Request) {
 		user.lastLoggedin = new Date();
 		await user.save();
 
-		// Set session cookie (simple implementation for now)
+		// Generate JWT token
+		const token = signToken({
+			userId: user._id.toString(),
+			email: user.email,
+		});
+
+		// Set session cookie
 		const cookieStore = await cookies();
-		cookieStore.set('session', 'authenticated', {
+		cookieStore.set('session', token, {
 			httpOnly: true,
 			secure: process.env.NODE_ENV === 'production',
 			sameSite: 'lax',
@@ -32,7 +46,16 @@ export async function POST(request: Request) {
 			path: '/',
 		});
 
-		return NextResponse.json({ message: 'Login successful' });
+		return NextResponse.json({
+			message: 'Login successful',
+			token,
+			user: {
+				id: user._id,
+				name: user.name,
+				companyName: user.companyName,
+				email: user.email,
+			},
+		});
 	} catch (error: any) {
 		console.error('Login error:', error);
 		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

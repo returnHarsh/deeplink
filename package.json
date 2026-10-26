@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@types/request-ip": "^0.0.41",
+    "bcryptjs": "^3.0.3",
     "date-fns": "^4.1.0",
     "fast-geoip": "^1.1.88",
     "framer-motion": "^12.29.2",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
     "next": "16.1.6",
     "react": "19.2.3",
@@ -22,6 +24,8 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

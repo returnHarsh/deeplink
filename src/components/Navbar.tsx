@@ -1,14 +1,44 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [modalOpen, setModalOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const checkAuth = useCallback(() => {
+    // When on login or signup pages, always show Log In and Sign Up options
+    if (pathname === '/login' || pathname === '/signup') {
+      setIsLoggedIn(false);
+      return;
+    }
+
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const hasValidToken = Boolean(
+      token && token !== 'undefined' && token !== 'null' && token.trim() !== ''
+    );
+    setIsLoggedIn(hasValidToken);
+  }, [pathname]);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  useEffect(() => {
+    const handleAuthChange = () => checkAuth();
+    window.addEventListener('auth-change', handleAuthChange);
+    window.addEventListener('storage', handleAuthChange);
+    return () => {
+      window.removeEventListener('auth-change', handleAuthChange);
+      window.removeEventListener('storage', handleAuthChange);
+    };
+  }, [checkAuth]);
 
   const openModal = () => {
     setModalOpen(true);
@@ -86,23 +116,38 @@ export default function Navbar() {
             <Link href="/about" className=" transition-colors">About</Link>
           </nav>
 
-          <div className="flex gap-2.5">
-            {/* <Link
-              className="hidden sm:inline-flex items-center justify-center gap-2 border border-white/[0.09] rounded-xl px-4 py-[11px] bg-white/[0.03] text-white cursor-pointer font-[650] text-sm hover:-translate-y-px hover:border-white/[0.18] transition-all no-underline"
-              href="/#demo"
-            >
-              View demo
-            </Link> */}
-            <button
-              onClick={openModal}
-              className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-[11px] border-transparent text-white cursor-pointer font-[650] text-sm hover:-translate-y-px transition-all"
-              style={{
-                background: 'linear-gradient(135deg,#7C5CFF,#5F8CFF)',
-                boxShadow: '0 12px 32px rgba(124,92,255,.25)',
-              }}
-            >
-              Request access →
-            </button>
+          <div className="flex items-center gap-2.5">
+            {isLoggedIn ? (
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-[10px] text-white cursor-pointer font-[650] text-sm hover:-translate-y-px transition-all"
+                style={{
+                  background: 'linear-gradient(135deg,#7C5CFF,#5F8CFF)',
+                  boxShadow: '0 12px 32px rgba(124,92,255,.25)',
+                }}
+              >
+                Dashboard →
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="inline-flex items-center justify-center px-3.5 py-[9px] rounded-xl text-slate-700 hover:text-black font-[600] text-sm transition-colors"
+                >
+                  Log In
+                </Link>
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-[10px] text-white cursor-pointer font-[650] text-sm hover:-translate-y-px transition-all"
+                  style={{
+                    background: 'linear-gradient(135deg,#7C5CFF,#5F8CFF)',
+                    boxShadow: '0 12px 32px rgba(124,92,255,.25)',
+                  }}
+                >
+                  Sign Up →
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
