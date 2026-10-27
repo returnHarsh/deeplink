@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import dbConnect from './db';
 import Link, { ILink } from '@/models/Link';
 
@@ -16,21 +17,24 @@ export interface LinkData {
   url: string;
   slug: string;
   tag: string;
+  userId?: string;
   createdAt: string;
   clicks: number;
   clickTimestamps?: string[];
   clicksInfo?: ClickInfo[];
 }
 
-// Read all links
-export async function getLinks(): Promise<LinkData[]> {
+// Read all links or links belonging to a specific user
+export async function getLinks(userId?: string): Promise<LinkData[]> {
   await dbConnect();
-  const links = await Link.find({}).sort({ createdAt: -1 });
+  const filter = userId ? { userId } : {};
+  const links = await Link.find(filter).sort({ createdAt: -1 });
   return links.map(doc => ({
     id: doc._id.toString(),
     url: doc.url,
     slug: doc.slug,
     tag: doc.tag,
+    userId: doc.userId?.toString(),
     createdAt: doc.createdAt.toISOString(),
     clicks: doc.clicks,
     clickTimestamps: doc.clickTimestamps?.map((d: Date) => d.toISOString()) || [],
@@ -57,6 +61,7 @@ export async function getLinkBySlug(slug: string): Promise<LinkData | undefined>
     url: doc.url,
     slug: doc.slug,
     tag: doc.tag,
+    userId: doc.userId?.toString(),
     createdAt: doc.createdAt.toISOString(),
     clicks: doc.clicks,
     clickTimestamps: doc.clickTimestamps?.map((d: Date) => d.toISOString()) || [],
@@ -72,7 +77,7 @@ export async function getLinkBySlug(slug: string): Promise<LinkData | undefined>
 }
 
 // Create new link
-export async function createLink(url: string, slug?: string, tag: string = 'others'): Promise<LinkData> {
+export async function createLink(url: string, slug?: string, tag: string = 'others', userId?: string): Promise<LinkData> {
   await dbConnect();
 
   // Generate slug if not provided
@@ -88,6 +93,7 @@ export async function createLink(url: string, slug?: string, tag: string = 'othe
     url,
     slug: finalSlug,
     tag,
+    userId: userId && mongoose.Types.ObjectId.isValid(userId) ? new mongoose.Types.ObjectId(userId) : userId,
   });
 
   return {
@@ -95,6 +101,7 @@ export async function createLink(url: string, slug?: string, tag: string = 'othe
     url: newLink.url,
     slug: newLink.slug,
     tag: newLink.tag,
+    userId: newLink.userId?.toString(),
     createdAt: newLink.createdAt.toISOString(),
     clicks: newLink.clicks,
     clickTimestamps: [],

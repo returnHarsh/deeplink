@@ -1,4 +1,4 @@
-/*
+
 import { redirect, notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import { getLinkBySlug, recordClick } from '@/lib/storage';
@@ -80,15 +80,15 @@ export default async function RedirectPage({ params }: Props) {
 
   return <BreakoutPage destinationUrl={link.url} />;
 }
-*/
+
 
 // Static export placeholders required by Next.js output: export
-export function generateStaticParams() {
-  return [{ slug: 'default' }];
-}
+// export function generateStaticParams() {
+//   return [{ slug: 'default' }];
+// }
 
-export default function Page() {
-  return null;
-}
+// export default function Page() {
+//   return null;
+// }
 
 

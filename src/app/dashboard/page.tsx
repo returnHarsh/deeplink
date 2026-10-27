@@ -1,17 +1,25 @@
+import { cookies } from 'next/headers';
+import { verifyToken } from '@/lib/jwt';
 import { getLinks, LinkData } from '@/lib/storage';
 import Link from 'next/link';
 import DashboardLinksList from '@/components/DashboardLinksList';
 import GlobalTagAnalytics from '@/components/GlobalTagAnalytics';
 import LogoutButton from '@/components/LogoutButton';
 
-// export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic';
 
 export default async function DashboardRoot() {
   let links: LinkData[] = [];
   try {
-    links = await getLinks();
+    const cookieStore = await cookies();
+    const sessionToken = cookieStore.get('session')?.value;
+    const payload = sessionToken ? verifyToken(sessionToken) : null;
+
+    if (payload?.userId) {
+      links = await getLinks(payload.userId);
+    }
   } catch (e) {
-    console.warn("Could not fetch links during static build:", e);
+    console.warn("Could not fetch links during dashboard load:", e);
   }
 
   return (

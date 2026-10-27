@@ -3,14 +3,19 @@ import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
 	const session = request.cookies.get('session');
-	console.log('session is : ' , session)
 	const { pathname } = request.nextUrl;
 
-	// Protect dashboard routes (e.g. /dashboard, /dashboard/[slug], /generate)
-	const isProtectedRoute = pathname.startsWith('/dashboard') || pathname === '/generate';
+	// Protected routes
+	const isProtectedApi = pathname.startsWith('/api/gen');
+	const isProtectedPage = pathname.startsWith('/dashboard') || pathname === '/generate';
 
-	// If not logged in and attempting to access protected route, redirect to /login
-	if (!session && isProtectedRoute) {
+	// Reject unauthenticated requests to protected API routes
+	if (!session && isProtectedApi) {
+		return NextResponse.json({ error: 'Unauthorized: Please log in' }, { status: 401 });
+	}
+
+	// Redirect unauthenticated requests to protected page routes
+	if (!session && isProtectedPage) {
 		const loginUrl = new URL('/login', request.url);
 		return NextResponse.redirect(loginUrl);
 	}
@@ -20,7 +25,32 @@ export function proxy(request: NextRequest) {
 		return NextResponse.redirect(new URL('/dashboard', request.url));
 	}
 
-	return NextResponse.next();
+	// Forward user info in request headers if session token exists
+	const requestHeaders = new Headers(request.headers);
+	if (session?.value) {
+		try {
+			const parts = session.value.split('.');
+			if (parts.length === 3) {
+				const payloadBase64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+				const payloadJson = atob(payloadBase64);
+				const parsed = JSON.parse(payloadJson);
+				if (parsed?.userId) {
+					requestHeaders.set('x-user-id', parsed.userId);
+				}
+				if (parsed?.email) {
+					requestHeaders.set('x-user-email', parsed.email);
+				}
+			}
+		} catch (e) {
+			console.warn('Could not decode session token in proxy:', e);
+		}
+	}
+
+	return NextResponse.next({
+		request: {
+			headers: requestHeaders,
+		},
+	});
 }
 
 export const middleware = proxy;

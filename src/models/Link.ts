@@ -13,6 +13,7 @@ export interface ILink extends Document {
 	url: string;
 	slug: string;
 	tag: 'linkedin' | 'instagram' | 'twitter(x)' | 'facebook' | 'others';
+	userId: mongoose.Types.ObjectId;
 	clicks: number;
 	clickTimestamps: Date[];
 	clicksInfo: IClickInfo[];
@@ -36,6 +37,12 @@ const LinkSchema: Schema = new Schema({
 		enum: ['linkedin', 'instagram', 'twitter(x)', 'facebook', 'others'],
 		default: 'others',
 		required: true,
+	},
+	userId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+		index: true,
 	},
 	clicks: {
 		type: Number,

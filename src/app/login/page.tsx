@@ -200,11 +200,11 @@ export default function LoginPage() {
                   </button>
 
                   <div className="flex items-center justify-between gap-3 mt-3.5">
-                    <a href="#" className="text-sm text-slate-400 hover:text-slate-100 transition-colors no-underline hover:underline">
+                    {/* <a href="#" className="text-sm text-slate-400 hover:text-slate-100 transition-colors no-underline hover:underline">
                       Forgot password?
-                    </a>
-                    <a href="#" className="text-sm text-slate-400 hover:text-slate-100 transition-colors no-underline hover:underline">
-                      Contact support
+                    </a> */}
+                    <a href="https://wa.me/918053544997?text=Hey%2C%0AI%20am%20facing%20issues%20in%20login%20at%20openinbrowser.in%0A%0ACan%20you%20please%20help%3F" target='blank' className="text-sm text-slate-400 no-underline">
+                      Facing Issues? <Link href="https://wa.me/918053544997?text=Hey%2C%0AI%20am%20facing%20issues%20in%20login%20at%20openinbrowser.in%0A%0ACan%20you%20please%20help%3F" target='blank' className="font-bold no-underline hover:underline text-slate-400">Contact support</Link>
                     </a>
                   </div>
 
