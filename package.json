@@ -12,7 +12,6 @@
     "@types/request-ip": "^0.0.41",
     "bcryptjs": "^3.0.3",
     "date-fns": "^4.1.0",
-    "fast-geoip": "^1.1.88",
     "framer-motion": "^12.29.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
